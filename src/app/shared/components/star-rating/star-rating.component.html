@@ -1,0 +1,10 @@
+<ng-container *ngIf='!forShow'>
+    <div class="rating" *ngFor="let r of ratingArray; let i = index" (click)="addRating(i)">
+        <i [ngClass]="showStars(i)"></i> 
+    </div>
+</ng-container>
+<ng-container *ngIf='forShow'>
+    <div class="rating" *ngFor="let r of ratingArray; let i = index">
+        <i [ngClass]="showStars(i)" style="font-size: 14px; cursor: context-menu;"></i> 
+    </div>
+</ng-container>

@@ -1,0 +1,20 @@
+<h4>Order history</h4>
+<div class="row">
+    <div class="col-6" *ngFor="let order of orderHistory$ | pagination: page : itemsPerPage">
+        <div class="card mb-3 order-card">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img [src]="order.image" alt="course-image" class="img-thumbnail">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{ order.courseName }}</h5>
+                  <span class="card-text">{{ order.price | currency: CAD }}</span>
+                  <p class="card-text"><small class="text-muted">Order made on {{ order.dateTime | date: 'short' }}</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+<app-pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalOrders" (pageChange)="onPageChange($event)"></app-pagination>

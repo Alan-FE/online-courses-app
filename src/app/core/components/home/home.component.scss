@@ -1,0 +1,69 @@
+@import '../../../../colors';
+
+.top-courses {
+    padding: 3rem 0;
+};
+
+.sub-title {
+    font-size: 1.1em;
+    color: $primary-color;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+};
+
+.custom-btn {
+    margin-top: 1rem;
+};
+
+.instr-card-container {
+    width: 25%;
+}
+
+.custom-card {
+    flex-direction: row;
+    transition: all .4s;
+    height: calc(100% - 1rem);
+
+    &:hover {
+        background-color: #dcdacb;
+        transform: scale(1.07)
+    };
+};
+
+.instr-img {
+    max-width: 85px;
+    padding: .5rem;
+};
+
+.card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+};
+
+.statistics {
+    padding-top: 3rem;
+};
+
+@media (max-width: 992px) {
+	.instr-card-container {
+        width: 50%;
+    }
+}
+
+@media (max-width: 576px) {
+	.instr-card-container {
+        width: 80%;
+        margin: auto;
+    }
+}
+
+.about-us {
+    background-color:  #38aedd; 
+    border-radius: 7px; 
+    padding: 10px;
+    
+    .text {
+        color: white;
+    }
+}

@@ -1,0 +1,61 @@
+<form [formGroup]="securityForm" (ngSubmit)="changePassword()">
+    <div class="row">
+        <div class="col-12">
+            <h6 class="mb-2 text-primary">Change Password</h6>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="currentPassword" class="form-label">Current Password</label>
+                <input type="password" class="form-control" id="currentPassword"
+                name="currentPassword" formControlName="currentPassword" autocomplete="off"
+                placeholder="Enter Current Password">
+                <div *ngIf="currentPassword.invalid && (currentPassword.dirty || currentPassword.touched)">
+                    <div *ngIf="currentPassword.errors?.required" class="text-danger py-1">
+                        The field must not be empty
+                    </div>
+                    <div *ngIf="currentPassword.errors?.minlength" class="text-danger py-1">
+                        Password must contain at least 6 characters!
+                    </div>
+                    <div *ngIf="currentPassword.errors?.maxlength" class="text-danger py-1">
+                        Password can contain a maximum of 50 characters
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" formGroupName="passwordGroup">
+            <div class="form-group">
+                <label for="password" class="form-label">New password</label>
+                <input type="password" class="form-control" id="password"
+                name="password" formControlName="password" autocomplete="off"
+                placeholder="Enter New password">
+                <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                    <div *ngIf="password.errors?.required" class="text-danger py-1">
+                        The field must not be empty
+                    </div>
+                    <div *ngIf="password.errors?.minlength" class="text-danger py-1">
+                        Password must contain at least 6 characters!
+                    </div>
+                    <div *ngIf="password.errors?.maxlength" class="text-danger py-1">
+                        Password can contain a maximum of 50 characters
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" formGroupName="passwordGroup">
+            <div class="form-group">
+                <label for="confirmPassword" class="form-label">Confirm new password</label>
+                <input type="password" class="form-control" id="confirmPassword"
+                name="confirmPassword" formControlName="confirmPassword" autocomplete="off"
+                placeholder="Re-type New Password">
+                <div *ngIf="passwordGroup.errors?.isNotSame" class="col-12 text-danger custom-input py-1">
+                    Your password and confirmation password not match
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 text-center">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" [disabled]="!securityForm.valid">Change password</button>
+            </div>
+        </div>
+    </div>
+</form>

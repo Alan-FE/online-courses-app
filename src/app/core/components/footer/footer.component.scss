@@ -1,0 +1,11 @@
+@import '../../../../colors';
+
+.page-footer {
+    background-color: $primary-color;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    color: #ffffff;
+    height: 3.5rem;
+    line-height: 3.5rem;
+}

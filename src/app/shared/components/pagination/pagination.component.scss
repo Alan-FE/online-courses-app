@@ -1,0 +1,10 @@
+@import '../../../../colors';
+
+a {
+    cursor: pointer;
+}
+
+.active-page .page-link {
+    background-color: $primary-color;
+    color: white;
+}

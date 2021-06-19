@@ -1,0 +1,28 @@
+<form class="row g-3">
+    <div class="col-lg-3 col-sm-12">
+        <div class="card  text-center custom-profile">
+            <div class="card-head" *ngIf="authService.loggedUser">
+                <img [src]="authService.loggedUser.image" 
+                    alt="user-image" class="img-fluid rounded-circle w-50 mb-2">
+                <h5>{{ authService.loggedUser.firstName }} {{ authService.loggedUser.lastName }}</h5>
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group pb-4">
+                    <li class="list-group-item custom-item" routerLink="account" routerLinkActive="active">Account</li>
+                    <li class="list-group-item custom-item" routerLink="security" routerLinkActive="active">Security</li>
+                    <li *ngIf="authService.loggedUser.role === 'instructor'" class="list-group-item custom-item" routerLink="about-me" 
+                    routerLinkActive="active">About me</li>
+                    <li *ngIf="authService.loggedUser.role === 'user'" class="list-group-item custom-item" routerLink="order-history" routerLinkActive="active">Order history</li>
+                    <li class="list-group-item custom-item" routerLink="close-account" routerLinkActive="active">Close account</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9 col-sm-12">
+        <div class="card h-100 custom-profile">
+            <div class="card-body">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+  </form>

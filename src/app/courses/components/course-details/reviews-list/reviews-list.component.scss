@@ -1,0 +1,54 @@
+@import '../../../../../colors';
+
+.reviews-container {
+    width: 50%;
+}
+
+.review-text {
+    word-break: break-all;
+}
+
+.rating {
+    display: inline-block;
+    padding: 7px;
+  }
+  
+.reviews {
+    border-bottom: 1px solid $primary-color;
+}
+
+.comment-box {
+    padding: 5px
+}
+
+.comment-area textarea {
+    resize: none;
+    border: 1px solid $primary-color;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #ffffff;
+    outline: 0;
+    box-shadow: 0 0 0 1px $primary-color !important;
+}
+
+.post {
+    color: #fff;
+    background-color: $primary-color;
+    border-color: $primary-color;
+}
+
+.post:hover {
+    color: #fff;
+    background-color: $secondary-color;
+    border-color: $secondary-color;
+};
+
+@media (max-width: 768px) {
+    .reviews-container {
+        width: 75%;
+        margin: auto;
+    }
+}

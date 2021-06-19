@@ -1,0 +1,41 @@
+<div class="instructor-details row justify-content-center">
+    <div class="col-10 text-justify p-0" *ngFor="let property of instructorDetails">
+        <img class="rounded-circle p-2" [src]="property.image" alt="instructor-image">
+        <div class="text-muted">{{ property.role | uppercase }}</div>
+        <h1>{{ property.instrFullName }}</h1>
+        <h2>{{ property.profession }}</h2>
+        <table class="table text-center">
+            <tr>
+                <th>Instructor rating</th>
+                <th>Total reviews</th>
+                <th>Total students</th>
+            </tr>
+            <tr>
+                <td><app-star-rating [rating]="property.instrRating" [forShow]="true"></app-star-rating> {{ property.instrRating }}</td>
+                <td>{{ property.noReviews }}</td>
+                <td>{{ property.noStudents }}</td>
+            </tr>
+        </table>
+        <p class="pt-2">{{ property.biography }}</p>
+        <strong>My courses ({{ property.noCourses }})</strong>
+    </div>
+
+    <div class="col-10 mt-2">
+        <div class="row">
+            <div class="col-3 p-2" *ngFor="let course of instructorCourses | pagination: page : itemsPerPage">
+                <div class="card custom-card h-100">
+                    <img [src]="course.image" class="card-img-top" alt="course-img">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ course.courseName }}</h5>
+                        <span class="text-muted">{{ course.instrFullName }}</span>
+                        <p><app-star-rating [rating]="course.rating" [forShow]="true"></app-star-rating> {{ course.rating }}</p>
+                        <p>{{ course.price | currency: CAD }}</p>
+                        <button class="btn btn-primary" [routerLink]="['/courses/course-details', course.courseId]">
+                        Show details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalCourses" (pageChange)="onPageChange($event)"></app-pagination>

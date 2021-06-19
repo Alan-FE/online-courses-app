@@ -1,0 +1,91 @@
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand">Courses</a>
+    
+    <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarNav"
+    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="text-white">
+        <i class="fas fa-bars"></i></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+        <ul class="navbar-nav">
+            <ng-container *ngIf="authService.loggedUser?.role !== 'admin'">
+                <li class="nav-item">
+                    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                        <i class="fas fa-home icons"></i> Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a routerLink="/courses" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-laptop-code icons"></i> Courses
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a routerLink="/instructors" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-chalkboard-teacher icons"></i> Instructors
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a routerLink="/cart" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-shopping-cart icons"></i> Cart
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a routerLink="/sign-up" routerLinkActive="active" class="nav-link" *ngIf="!authService.loggedUser">
+                        <i class="far fa-user-circle icons"></i> Sign up
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a routerLink="/sign-in" routerLinkActive="active" class="nav-link" *ngIf="!authService.loggedUser">
+                        <i class="fas fa-sign-in-alt icons"></i> Sign in
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a routerLink="/profile" routerLinkActive="active" class="nav-link" *ngIf="authService.loggedUser">
+                        <i class="fas fa-user icons"></i> Profile
+                    </a>
+                </li>
+            </ng-container>
+
+            <ng-container *ngIf="authService.loggedUser?.role == 'admin'">
+
+                <li class="nav-item">
+                    <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-tachometer-alt icons"></i> Dashboard
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a routerLink="/all-courses" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-laptop-code icons"></i> All courses
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a routerLink="/all-users" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-users icons"></i> All users
+                    </a>
+                </li>
+
+            </ng-container>
+
+                <li class="nav-item dropdown" *ngIf="authService.loggedUser">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-user icons"></i> {{ authService.loggedUser.firstName }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" (click)="signOut()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </li>
+
+        </ul>
+    </div>
+</nav>

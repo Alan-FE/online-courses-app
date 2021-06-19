@@ -1,0 +1,58 @@
+<form [formGroup]="userForm"  (ngSubmit)="isEdit ? update() : createUser()">
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="form-group">
+                <label for="firstName" class="form-label">First name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Enter a first name"
+                name="firstName" formControlName="firstName">
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group">
+                <label for="lastName" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Enter a last name"
+                name="lastName" formControlName="lastName">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter a email"
+                name="email" formControlName="email">
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter a password"
+                name="password" formControlName="password">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="form-group">
+                <label for="image" class="form-label">Image</label>
+                <input type="text" class="form-control" id="image" placeholder="Enter a url of image"
+                name="image" formControlName="image">
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group">
+                <label for="role" class="form-label">Role</label><br>
+                <select id="role" class="form-select" name="role" formControlName="role">
+                    <option value="null">Choose role</option>
+                    <option value="user">User role</option>
+                    <option value="instructor">Instructor</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-5">
+            <button type="submit" class="btn btn-primary w-100">{{ isEdit ? 'Update' : 'Create user' }}</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,50 @@
+@import '../../../../colors';
+
+.navbar {
+    background-color: $primary-color;
+    padding: 12px 16px;
+    a {
+        color: white;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.nav-link {
+    text-align: center;
+    border-radius: 7px;
+    font-size: 14px;
+    padding: 8px 19px!important;
+    &:hover {
+        background-color: $secondary-color;
+    }
+    .icons {
+        font-size: 22px;
+    }
+}
+
+.active {
+   background-color: $secondary-color;
+}
+
+.dropdown {
+    position: absolute;
+    right: 10px;
+    .dropdown-menu > a {
+        color: black;
+    }
+}
+
+@media screen and (max-width: 992px){
+    .nav-link {
+        text-align: left;
+    }
+    .dropdown {
+        position: relative;
+        right: 0px;
+        .dropdown-menu {
+            position: absolute;
+        }
+    }
+}

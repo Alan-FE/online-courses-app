@@ -1,0 +1,54 @@
+.course {
+   position: relative;
+}
+
+.course-info {
+    width: 60%;
+    padding: 1rem;
+    min-height: 400px;
+};
+
+.middle {
+    width: 90%;
+    margin: 1rem auto;
+}
+
+.course-card {
+    width: 30%;
+    position: sticky;
+    top: 30px;
+    float: right;
+    margin-top: -259px;
+    clear: both;
+};
+
+.course-content {
+    margin-top: 10px;
+    width: 60%;
+}
+
+app-modal {
+    display: none;
+};
+
+@media (max-width: 768px) {
+    .middle {
+        width: 100%;
+        .course-card, .course-content {
+            width: 75%;
+            margin: auto
+        };
+    
+        .course-card {
+            position: relative;
+            display: block;
+            top: 0px;
+            float: none;
+            margin-top: 10px;
+        };
+    };
+
+    .course-info {
+        width: 100%;
+    };
+}

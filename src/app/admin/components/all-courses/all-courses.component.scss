@@ -1,0 +1,16 @@
+app-modal {
+    display: none;
+}
+
+.actions {
+    padding-left: 1rem;
+    cursor: pointer;
+}
+
+.actions:nth-child(2) {
+    color: orange;
+}
+
+.actions:nth-child(3) {
+    color: red;
+}

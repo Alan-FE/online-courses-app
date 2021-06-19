@@ -1,0 +1,98 @@
+<div class="course" *ngFor="let course of courseById$">
+        <div class="bg-light">
+        
+            <div class="course-info">
+                <h1>{{ course.courseName }}</h1>
+                <p>{{ course.description }}</p>
+                <span>
+                    <app-star-rating [rating]="course.courseRating" [forShow]="true"></app-star-rating>
+                    {{ course.courseRating | number: '1.0-1' }} ({{ course.noRating }}) 
+                    <ng-template *ngIf="authService.loggedUser?.role =='instructor'">
+                    <a [routerLink]="" 
+                    (click)="showList('custom-modal-1', course.courseId)">List of students</a>
+                        <app-modal id="custom-modal-1">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">First name</th>
+                                    <th scope="col">Last name</th>
+                                    <th scope="col">Email</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let student of listOfStudents$; let i = index">
+                                    <th scope="row">{{ i + 1 }}</th>
+                                    <td>{{  student.firstName }}</td>
+                                    <td>{{ student.lastName }}</td>
+                                    <td>{{ student.email }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <button class="btn btn-secondary mx-auto m-1"
+                                    (click)="closeModal('custom-modal-1')">Close</button>
+                        </app-modal>
+                    </ng-template>
+                </span>
+                <p>Created by {{ course.instrFullName }}</p>
+                <p class="m-0"><i class="far fa-calendar"></i> Added {{ course.added | date: 'short'}} <br><i
+                        class="fas fa-language"></i> {{ course.language }}</p>
+            </div>
+        </div>
+
+        <div class="middle">
+            <div class="course-card">
+                <div class="card">
+                    <img src="https://miro.medium.com/max/1838/1*P7x-_0XfQz6CVmMY_QAv0w.png" alt="course-image">
+                    <div class="card-body">
+                        <h3>{{ course.courseName }}</h3>
+                        <div *ngIf="authService.loggedUser?.role === 'instructor'; else user">
+                            <app-modal id="custom-modal-2">
+                                <app-my-courses [updateForm]="data" [edit]="isEdit" (update)="updateCourse($event)"></app-my-courses>
+                                <button class="btn btn-secondary mx-auto m-1"
+                                    (click)="closeModal('custom-modal-2')">Close</button>
+                            </app-modal>
+                            <ng-container *ngIf="authService.loggedUser?.userId === course.fkUser">
+                                <div class="btn-group-vertical">
+                                    <button class="btn btn-light" (click)="onEdit(course, 'custom-modal-2')">Edit</button>
+                                    <button class="btn btn-danger" (click)="onDelete(course.courseId)">Delete</button>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div>Price {{ course.price | currency }}</div>
+                        <ng-template #user>
+                            <button *ngIf="!course.inCart && !course.purchased" type="button"
+                                class="btn btn-primary m-1 w-100" (click)="addToCart(course.courseId)">Add to cart</button>
+                            <button *ngIf="course.inCart" type="button" class="btn btn-danger m-1 w-100"
+                                routerLink="/cart">Go to cart</button>
+                            <button *ngIf="!course.purchased; else buyed" type="button" class="btn btn-success w-100 m-1"
+                                (click)="buyCourse(course.courseId)">Buy
+                                Now</button>
+                        </ng-template>
+                        <span>30-Day Money-Back Guarantee</span>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="fas fa-globe"></i> {{ course.language }}</li>
+                            <li class="list-group-item"><i class="fas fa-infinity"></i> Full lifetime access</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-content">
+                <h2 class="text-center">Course content</h2>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-start"
+                        *ngFor="let content of course.content">
+                        <span><i class="fas fa-play"></i>
+                            {{ content }}
+                        </span>
+                        <span>
+                            <i class="fas fa-video"></i>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <app-reviews-list [reviews$]="reviews$" [isPurchased]="purchased" 
+            (changeTotalRating)="change($event, course)"></app-reviews-list>
+    </div>
+</div>

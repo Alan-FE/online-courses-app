@@ -1,0 +1,43 @@
+.login-form {
+    width: 27%;
+    margin: 0 auto;
+    i, a {
+        color: #386cdd;
+    };
+};
+
+.custom-card {
+    padding: 30px;
+};
+
+.user {
+    font-size: 100px; 
+};
+
+.button {
+    background-color: #386cdd;
+    color: white;
+    width: 100%;
+
+    &:hover {
+        background-color: #3877ff;
+    }
+};
+
+@media screen and (max-width: 992px){
+    .login-form {
+        width: 35%;
+    };
+}
+
+@media screen and (max-width: 768px){
+    .login-form {
+        width: 50%;
+    };
+}
+
+@media screen and (max-width: 576px){
+    .login-form {
+        width: 85%;
+    };
+};

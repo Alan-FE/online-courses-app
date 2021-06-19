@@ -1,0 +1,109 @@
+@import '../../../../colors';
+
+.list-instructors {
+    text-align: center;
+    margin: auto;
+    width: 40%;
+    padding: 15px;
+    background-color: white;
+    color: $primary-color;
+    border: 1px solid $primary-color;
+    border-radius: 7px;
+    white-space: nowrap;
+    overflow: hidden;
+};
+
+.search-bar {
+    width: 40%;
+    margin: 2em auto;
+};
+
+.search-bar .search-input{
+    padding-left: 2.33rem;
+    border: 2px solid $primary-color;
+    border-radius: 34px;
+    box-shadow: none;
+};
+
+.search-bar .search-icon {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.33rem;
+    height: 2.33rem;
+    line-height: 2.33rem;
+    text-align: center;
+    pointer-events: none;
+    color: $primary-color;
+};
+
+
+.custom-instr-card {
+    border-color: $primary-color;
+    color: black;
+    transition: all 1s;
+
+    &:hover {
+        box-shadow: inset 0 0 0 8px $primary-color;
+    }
+};
+
+a {
+    text-decoration: none;
+};
+
+i {
+    color: #FF9529;
+};
+
+h6 {
+    color: grey;
+};
+
+.custom-col {
+    width: 20%;
+    padding: .4rem;
+};
+
+.instr-img {
+    width: 40%;
+};
+
+.custom-badge {
+    background-color: $primary-color;
+    color: white;
+};
+
+ul li {
+    font-size: 14px;
+};
+
+@media (max-width: 1200px) {	
+	.custom-col {
+        width: 25%;
+    };
+};
+
+@media (max-width: 992px) {	
+	.custom-col {
+        width: 33.33%;
+    };
+};
+@media (max-width: 768px) {
+	.custom-col {
+        width: 50%;
+    };
+    .list-instructors, .search-bar {
+        width: 60%;
+    };
+};
+
+@media (max-width: 576px) {
+	.custom-col {
+        width: 80%;
+        margin: auto;
+    };
+    .list-instructors, .search-bar {
+        width: 80%;
+    };
+};

@@ -1,0 +1,56 @@
+<div class="list-instructors" @show>
+    <h4 class="m-0">List of instructors</h4>
+</div>
+
+<div class="form-group search-bar">
+    <i class="fas fa-search search-icon"></i>
+    <input type="text" class="form-control search-input" placeholder="Search by instructor name or surname"
+    [(ngModel)]="value">
+</div>
+
+<div class="row">
+    <div class="custom-col" *ngFor="let instructor of instructors$ | filter: value: 'instrFullName' | pagination: page : itemsPerPage ">
+        <a [routerLink] = "['/instructors/instructor-details', instructor.instructorId]">
+            <div class="card custom-instr-card h-100">
+                <div class="card-body text-center p-2 shadow">
+                    <h6>{{ instructor.role | uppercase }}</h6>
+                    <img [src]="instructor.image" 
+                    alt="instructor-image" class="img-fluid rounded-circle mb-3 instr-img">
+                    <h5>{{ instructor.instrFullName }}</h5>
+                    <h6>{{ instructor.profession }}</h6>
+                    
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-star"></i> Instructor rating</span>
+                            <span class="badge rounded-pill custom-badge">
+                                {{ instructor.instrRating }}
+                            </span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-comments"></i> 
+                                Total reviews
+                            </span>
+                            <span class="badge rounded-pill custom-badge"> {{ instructor.noReviews }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-user-friends"></i>
+                                    Total students
+                            </span>
+                            <span class="badge rounded-pill custom-badge"> {{ instructor.noStudents }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-play-circle"></i>
+                                Total courses
+                            </span>
+                            <span class="badge rounded-pill custom-badge"> {{ instructor.noCourses }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<app-pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalInstructors" (pageChange)="onPageChange($event)"></app-pagination>

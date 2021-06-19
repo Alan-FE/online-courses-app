@@ -1,0 +1,46 @@
+<div *ngIf="course" class="custom-course">
+    <div class="row">
+        <div class="col-3">
+            <h1>{{ course.courseName }}</h1>
+        </div>
+        <div class="col-6">
+            <img [src]="course.image" alt="course-image" style="width: 50%;">
+        </div>
+        <div class="col-3">
+            <h3>{{ course.instrFullName }}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h5>Description</h5>
+            <p>{{ course.description }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let content of course.content">{{ content }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row p-2">
+        <div class="col-3">
+            <h5>Course Rating</h5>
+            <p>{{ course.courseRating }}</p>
+        </div>
+        <div class="col-3">
+            <h5>Language</h5>
+            <p>{{ course.language }}</p>
+        </div>
+        <div class="col-3">
+            <h5>Added</h5>
+            <p>{{ course.added | date: 'short' }}</p>
+        </div>
+        <div class="col-3">
+            <h5>Price</h5>
+            <p>{{ course.price | currency }}</p>
+        </div>
+    </div>
+</div>

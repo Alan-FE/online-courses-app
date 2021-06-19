@@ -1,0 +1,36 @@
+.sign-up-form {
+    width: 60%;
+    margin: 0 auto;
+
+    i, a {
+        color: #386cdd;
+    };
+    .user-plus {
+        font-size: 100px;
+    };    
+};
+
+.custom-input {
+    padding: 10px;
+};
+
+.custom-input > select {
+    padding: 6px 8px;
+}
+
+.custom-input input, select {
+    width: 100%;
+    height: calc(1.7em + .75rem + 2px);
+    padding: 6px 12px;
+}
+
+.custom-btn {
+    display: block;
+    width: 50%;
+    background-color: #386cdd;
+    color: white;
+    margin: 0 auto;
+    &:hover {
+        background-color: #3877ff;
+    };
+};

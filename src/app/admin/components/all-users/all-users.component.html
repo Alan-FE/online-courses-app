@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-sm-8"><h2>Users <b>Details</b></h2></div>
+    <div class="col-sm-4 text-right">
+        <button type="button" class="btn btn-info add-new" (click)="openModal('custom-modal')"><i class="fa fa-plus">
+        </i> Add New</button>
+        <app-modal id="custom-modal">
+          <app-user [user]="userData" (newUser)="add($event)" (updateUser)="update($event)"></app-user>
+          <button class="btn btn-secondary custom-btn" (click)="closeModal('custom-modal')">Close</button>
+        </app-modal>
+    </div>
+</div>
+<table class="table table-primary table-striped text-center table-responsive">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Image</th>
+        <th scope="col">Role</th>
+        <th scope="col">Created</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users$; let i = index">
+        <th scope="row">{{ i+1 }}</th>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td><img [src]="user.image" alt="user-image" class="img-fluid rounded-circle user-img"></td>
+        <td><span class="badge bg-info text-white">{{ user.role }}</span></td>
+        <td>{{ user.created | date: 'short'}}</td>
+        <td>
+            <button type="button" class="btn btn-primary btn-sm m-1" (click)="onEdit(user, i)">Edit</button> 
+            <button class="btn btn-danger btn-sm m-1" (click)="onDelete(user.userId, i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+</table>
+

@@ -1,0 +1,50 @@
+<div class="login-form">       
+       <div class="card shadow">
+            <div class="card-title text-center mt-3">
+                <i class="fas fa-user user"></i>
+               <h4 class="modal-title">Login to Your Account</h4>
+            </div>
+            <div class="card-body custom-card">
+                <form [formGroup]="signInForm" (ngSubmit)="signIn()">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="far fa-envelope"></i>
+                        </span>
+                        <input type="email" class="form-control" 
+                        name="email" formControlName="email" placeholder="Email address">
+                    </div>
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <div *ngIf="email.errors?.required" class="alert alert-danger p-2">
+                            Email is required!
+                        </div>
+                        <div *ngIf="email.errors?.pattern" class="alert alert-danger p-2">
+                            Please enter a valid email address!
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" class="form-control"
+                        name="password" formControlName="password" placeholder="Password">
+                    </div>
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                        <div *ngIf="password.errors?.required" class="alert alert-danger p-2">
+                           Password is required
+                        </div>
+                        <div *ngIf="password.errors?.minlength" class="alert alert-danger">
+                            Password must contain at least 6 characters
+                        </div>
+                        <div *ngIf="password.errors?.maxlength" class="alert alert-danger">
+                            Password can contain a maximum of 50 characters
+                        </div>
+                    </div>
+                    <button type="submit" class="btn button">Sign in</button>
+                    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+                        {{ errorMessage }}
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="text-center p-3">Don't have an account? <a routerLink="/sign-up">Sign up</a>
+</div>
