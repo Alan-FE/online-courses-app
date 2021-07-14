@@ -23,16 +23,15 @@ export class CartService {
   deleteFromCart(cartId: number) {
     const params = new HttpParams()
     .set('id', `${cartId}`);
-    if(cartId) {
-      return this.http.delete(this.serverUrl + 'delete-from-cart', {params: params});
-    } else {
-      return this.http.delete(this.serverUrl + 'clear-cart');
-    }
+      return this.http.delete(this.serverUrl + 'clear-cart', {params: params});
   };
 
   buyCourse(payload, cartId?: number) {
     let response1= this.http.post(this.serverUrl + 'buy-course', payload);
     let response2 = this.deleteFromCart(cartId);
+    if(cartId === null) {
+      return response1;
+    }
     return forkJoin([response1, response2]);
   };
 }

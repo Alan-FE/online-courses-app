@@ -34,3 +34,9 @@
         background-color: #3877ff;
     };
 };
+
+@media (max-width: 576px) {
+	.custom-btn {
+        width: 100%;
+    }
+};

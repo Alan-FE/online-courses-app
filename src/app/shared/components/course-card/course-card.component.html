@@ -1,15 +1,15 @@
 <div class="row">
     <div class="card-custom" *ngFor = "let course of courses$">
         <div class="card m-2">
-            <img src="https://miro.medium.com/max/1838/1*P7x-_0XfQz6CVmMY_QAv0w.png" class="card-img-top" alt="course-image">
+            <img [src]="course.image" class="card-img-top w-100" alt="course-image" style="max-height: 132px; object-fit: cover;">
             <div class="card-body">
-                <h5>{{ course.courseName }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{course.firstName}} {{course.lastName}}</h6>
+                <h5>{{ course.courseName | shorten }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ course.instrFullName }}</h6>
                     <span>
                         <app-star-rating [rating]="course.rating" [forShow]="true"></app-star-rating> 
                         {{ course.rating | number: '1.0-1' }} ({{ course.noRating }})
                     </span>
-                    <p class="price">{{ course.price | currency }}</p>
+                    <p>{{ course.price | currency }}</p>
                     <a [routerLink]= "['/courses/course-details', course.courseId]" class="btn btn-info">Show details</a>
             </div>
         </div>

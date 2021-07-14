@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { forkJoin } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
@@ -31,13 +32,21 @@ export class AuthService {
   updateAccount(userId: number, payload: User) {
     const params = new HttpParams()
     .set('id', `${userId}`);
-    return this.http.put(this.serverUrl + 'update-account', payload , {params: params});
+    let response1 = this.http.put(this.serverUrl + 'update-account', payload , {params: params});
+    let response2 = this.userDataChanged();
+    return forkJoin([response1, response2]);
   }
 
   deleteAccount(userId: number) {
     const params = new HttpParams()
     .set('id', `${userId}`);
     return this.http.delete(this.serverUrl + 'delete-account', { params: params });
+  };
+
+  userDataChanged() {
+    const params = new HttpParams()
+    .set('id', `${this.loggedUser.userId}`);
+    return this.http.get(this.serverUrl + 'user-data-changed', {params: params});
   }
 
   callRefreshToken(payload) {
@@ -47,6 +56,6 @@ export class AuthService {
   get loggedUser() {
     let accessToken = localStorage.getItem('accessToken');
     return this.jwtHelper.decodeToken(accessToken);
-  }
+  };
 
 }

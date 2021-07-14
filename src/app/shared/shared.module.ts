@@ -14,6 +14,8 @@ import { ModalService } from './services/modal.service';
 import { CourseCardComponent } from './components/course-card/course-card.component';
 import { RouterModule } from '@angular/router';
 import { FilterPipe } from './pipes/filter.pipe';
+import { InstructorPermissionService } from './services/instructor-permission.service';
+import { ShortenPipe } from './pipes/shorten.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     ModalComponent,
     PaginationPipe,
     FilterPipe,
-    CourseCardComponent
+    CourseCardComponent,
+    ShortenPipe
   ],
   imports: [
     CommonModule,
@@ -39,12 +42,14 @@ import { FilterPipe } from './pipes/filter.pipe';
     ModalComponent,
     CourseCardComponent,
     PaginationPipe,
-    FilterPipe
+    FilterPipe,
+    ShortenPipe
   ],
   providers: [
     DatePipe,
     AuthService,
     ModalService,
+    InstructorPermissionService,
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}]
 })
 export class SharedModule { }

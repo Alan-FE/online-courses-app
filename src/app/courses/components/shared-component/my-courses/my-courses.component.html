@@ -1,0 +1,126 @@
+<div class="card course-card">
+    <div class="card-body">
+        <form [formGroup]="courseForm" (ngSubmit)="edit ? updateCourse() : createCourse()">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="courseName" class="form-label">Course name</label>
+                        <input type="text" class="form-control" id="courseName" placeholder="Enter a course name"
+                        name="courseName" formControlName="courseName">
+                        <div *ngIf="courseName.invalid && (courseName.dirty || courseName.touched)">
+                            <div *ngIf="courseName.errors?.required" class="text-danger py-1 small">
+                                Course name is required!
+                            </div>
+                            <div *ngIf="courseName.errors?.minlength" class="text-danger py-1 small">
+                                Course name must contain at least 5 characters!
+                            </div>
+                            <div *ngIf="courseName.errors?.maxlength" class="text-danger py-1 small">
+                                Course name can contain a maximum of 70 characters!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="image" class="form-label">Course image</label>
+                        <input type="text" class="form-control" id="image" placeholder="Enter url of image"
+                        name="image" formControlName="image">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="language" class="form-label">Language</label>
+                        <input type="text" class="form-control" id="language" placeholder="Enter a language"
+                        name="language" formControlName="language">
+                        <div *ngIf="language.invalid && (language.dirty || language.touched)">
+                            <div *ngIf="language.errors?.required" class="text-danger py-1 small">
+                                Language is required!
+                            </div>
+                            <div *ngIf="language.errors?.minlength" class="text-danger py-1 small">
+                                Language must contain at least 3 characters!
+                            </div>
+                            <div *ngIf="language.errors?.maxlength" class="text-danger py-1 small">
+                                Language can contain a maximum of 30 characters!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" placeholder="Enter a price"
+                        name="price" formControlName="price">
+                        <div *ngIf="language.invalid && (language.dirty || language.touched)">
+                            <div *ngIf="price.errors?.required" class="text-danger py-1 small">
+                                Price is required!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="description" class="form-control" rows="5" class="desc"
+                        name="description" formControlName="description"></textarea>
+                        <div *ngIf="description.invalid && (description.dirty || description.touched)">
+                            <div *ngIf="description.errors?.required" class="text-danger py-1 small">
+                                Description is required!
+                            </div>
+                            <div *ngIf="description.errors?.minlength" class="text-danger py-1 small">
+                                Description must contain at least 100 characters!
+                            </div>
+                            <div *ngIf="description.errors?.maxlength" class="text-danger py-1 small">
+                                Description can contain a maximum of 1500 characters!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="content"
+            *ngFor="let lessonData of content['controls']; let i = index">
+                <div class="row">
+                    <div class="col-10">
+                        <div class="form-group">
+                            <label for="lesson" class="form-label">Lesson {{ i+1 }}</label>
+                            <input type="text" class="form-control" id="lesson" placeholder="Enter a name of lesson"
+                            name="lesson" [formControlName]="i">
+                            <div *ngIf="lessonData.invalid && (lessonData.dirty || lessonData.touched)">
+                                <div *ngIf="lessonData.errors?.required" class="text-danger py-1 small">
+                                    The lesson field cannot be empty!
+                                </div>
+                                <div *ngIf="lessonData.errors?.minlength" class="text-danger py-1 small">
+                                    Lesson must contain at least 3 characters!
+                                </div>
+                                <div *ngIf="lessonData.errors?.maxlength" class="text-danger py-1 small">
+                                    Lesson can contain a maximum of 50 characters!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 align-self-center">
+                        <a class="remove-icon" (click)="deleteLesson(i)"><i class="far fa-trash-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" (click)="addLesson()">Add lesson</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" 
+                        [disabled]="!courseForm.valid">{{ edit ? 'Update course' : 'Create course' }}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

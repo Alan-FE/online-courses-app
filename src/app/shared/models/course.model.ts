@@ -7,5 +7,6 @@ export class CourseModel {
     lastName: string;
     rating: number;
     noRating: number;
+    userId: number;
 }
 

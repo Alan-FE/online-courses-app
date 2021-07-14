@@ -8,6 +8,17 @@
                 <label for="firstName" class="form-label">First name</label>
                 <input type="text" class="form-control" id="firstName"
                 name="firstName" formControlName="firstName">
+                <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+                    <div *ngIf="firstName.errors?.required" class="text-danger py-1 small">
+                       First name is required
+                    </div>
+                    <div *ngIf="firstName.errors?.minlength" class="text-danger py-1 small">
+                        First name must contain at least 2 characters
+                    </div>
+                    <div *ngIf="firstName.errors?.maxlength" class="text-danger py-1 small">
+                        First name can contain a maximum of 40 characters
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-6">
@@ -15,6 +26,17 @@
                 <label for="lastName" class="form-label">Last name</label>
                 <input type="tel" class="form-control" id="lastName"
                 name="lastName" formControlName="lastName">
+                <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+                    <div *ngIf="lastName.errors?.required" class="text-danger py-1 small">
+                       Last name is required
+                    </div>
+                    <div *ngIf="lastName.errors?.minlength" class="text-danger py-1 small">
+                        Last name must contain at least 2 characters
+                    </div>
+                    <div *ngIf="lastName.errors?.maxlength" class="text-danger py-1 small">
+                        Last name can contain a maximum of 40 characters
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-6">
@@ -22,6 +44,14 @@
                 <label for="email" class="form-label">Email</label>
                 <input type="text" class="form-control" id="email"
                 name="email" formControlName="email">
+                <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                    <div *ngIf="email.errors?.required" class="text-danger py-1 small">
+                        Email is required!
+                    </div>
+                    <div *ngIf="email.errors?.pattern" class="text-danger py-1 small">
+                        Please enter a valid email address!
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-6">
@@ -29,6 +59,11 @@
                 <label for="image" class="form-label">Image</label>
                 <input type="text" class="form-control" id="image"
                 name="image" formControlName="image">
+                <div *ngIf="image.invalid && (image.dirty || image.touched)">
+                    <div *ngIf="image.errors?.required" class="text-danger py-1 small">
+                        The image field cannot be empty!
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -55,7 +90,8 @@
         <div class="col-12 text-right">
             
             <button type="button" class="btn btn-secondary mr-2" (click)="onCancel()" [disabled]="editMode">Cancel</button>
-            <button *ngIf="!editMode"type="submit" class="btn btn-primary"[disabled]="!changedValue">Update</button>
+            <button *ngIf="!editMode"type="submit" class="btn btn-primary"[disabled]="!changedValue || !profileForm.valid">
+                Update</button>
             <button type="button" *ngIf="editMode"type="submit" class="btn btn-primary" (click)="onEdit()">Edit</button>
         </div>
     </div>

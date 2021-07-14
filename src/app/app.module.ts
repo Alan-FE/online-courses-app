@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-//import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-//import { ReactiveFormsModule } from '@angular/forms';
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { AdminModule } from './admin/admin.module';
@@ -25,10 +25,9 @@ import { RouterModule } from '@angular/router';
     InstructorModule,
     ProfileModule,
     SharedModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     RouterModule.forRoot([])
- //   ReactiveFormsModule,
-  //  HttpClientModule,
-   // BrowserAnimationsModule
   ],
   providers: [
    // DatePipe,

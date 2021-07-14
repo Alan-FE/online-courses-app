@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center mt-3">
+<div *ngIf="totalItems > 0" class="d-flex justify-content-center mt-3">
     <ul class="pagination">
       <li class="page-item" [ngClass]="{'disabled': isFirst}">
        <a class="page-link"

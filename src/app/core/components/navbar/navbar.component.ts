@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../../shared/services/auth.service';
 
@@ -8,7 +9,8 @@ import { AuthService } from '../../../shared/services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
+  subscription: Subscription;
 
   constructor(public authService: AuthService, private router: Router) { }
 
@@ -16,12 +18,15 @@ export class NavbarComponent implements OnInit {
   }
 
   signOut(): void {
-    this.authService.signOut().subscribe(res => {
+    this.subscription = this.authService.signOut().subscribe(res => {
       this.router.navigate(['/sign-in']);
       console.log(res);
     }, (error) => {
       console.log(error);
     });
-  }
+  };
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  };  
 }

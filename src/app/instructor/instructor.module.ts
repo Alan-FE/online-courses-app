@@ -6,9 +6,10 @@ import { SharedModule } from '../shared/shared.module';
 import { InstructorsComponent } from './components/instructors/instructors.component';
 import { InstructorDetailsComponent } from './components/instructor-details/instructor-details.component';
 import { InstructorService } from './services/instructor.service';
+import { InstructorPermissionService } from '../shared/services/instructor-permission.service';
 
 const routes: Routes = [
-  { path: 'instructors', component: InstructorsComponent },
+  { path: 'instructors', component: InstructorsComponent, canActivate: [InstructorPermissionService] },
   { path: 'instructors/instructor-details/:id', component: InstructorDetailsComponent }
 ];
 

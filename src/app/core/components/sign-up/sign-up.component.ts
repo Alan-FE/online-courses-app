@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserRegisterModel } from '../../models/user-register.model';
 import { AuthService } from '../../../shared/services/auth.service';
 import { samePassword } from 'src/app/shared/directives/same-password.directive';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,7 +15,7 @@ export class SignUpComponent implements OnInit {
   signupForm: FormGroup;
   userRegister: UserRegisterModel = new UserRegisterModel();
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -46,13 +47,20 @@ export class SignUpComponent implements OnInit {
         password: this.signupForm.getRawValue().passwordGroup.password,
       }
       this.authService.signUp(this.userRegister).subscribe((response) => {
-        console.log(response);
+        console.log(response)
+        this.signupForm.reset({
+          'role': 'user'
+        });
+        this.toastr.success("You have successfully registered! Now you can login!", "Notification")
       }, (error) => {
-        console.log(error);
+        if(error.error.code == "ER_DUP_ENTRY") {
+          this.toastr.warning("User with that email address already exists!", "Notification!")
+        } else {
+          this.toastr.warning(error.message, "Notification!")
+        }
       });
     }
     console.log(this.signupForm.getRawValue())
-    console.log(this.password)
   }
 
   get firstName() {

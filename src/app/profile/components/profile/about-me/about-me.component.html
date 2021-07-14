@@ -1,28 +1,56 @@
 <form *ngIf="instructor$" [formGroup]="aboutMeForm" (ngSubmit)="update()">
     <div class="row">
         <div class="col-12">
-            <h6 class="mb-2 text-primary">About me</h6>
+            <div class="form-group">
+                <h6 class="mb-2 text-primary">About me</h6>
+                <p *ngIf="!disableOrEnable" class="text-danger m-0 text-center">Please fill out the form is required!</p>
+            </div>
         </div>
         <div class="col-12">
             <div class="form-group">
                 <label for="profession" class="form-label">Profession</label>
                 <input type="text" class="form-control" id="profession"
-                name="profession" formControlName="profession"
-                >
+                name="profession" formControlName="profession">
+                <div *ngIf="profession.invalid && (profession.dirty || profession.touched)">
+                        <div *ngIf="profession.errors?.required" class="text-danger py-1 small">
+                           Profession is required
+                        </div>
+                        <div *ngIf="profession.errors?.minlength" class="text-danger py-1 small">
+                            Profession must contain at least 5 characters
+                        </div>
+                        <div *ngIf="profession.errors?.maxlength" class="text-danger py-1 small">
+                            Profession can contain a maximum of 70 characters
+                        </div>
+                </div>
             </div>
         </div>
         <div class="col-12">
             <div class="form-group">
-                <label for="about-me" class="form-label">About me</label>
-                <textarea class="form-control" id="about-me" rows="7"
-                name="aboutMe" formControlName="aboutMe"
+                <label for="biography" class="form-label">About me</label>
+                <textarea class="form-control" id="biography" rows="7"
+                name="biography" formControlName="biography"
                 ></textarea>
+                <div *ngIf="biography.invalid && (biography.dirty || biography.touched)">
+                    <div *ngIf="biography.errors?.required" class="text-danger py-1 small">
+                       About me is required
+                    </div>
+                    <div *ngIf="biography.errors?.minlength" class="text-danger py-1 small">
+                        About me must contain at least 100 characters
+                    </div>
+                    <div *ngIf="biography.errors?.maxlength" class="text-danger py-1 small">
+                        About me can contain a maximum of 1500 characters
+                    </div>
+            </div>
             </div>
         </div>
         <div class="col-md-12 text-center">
             <div class="form-group">
-                <button *ngIf="!edit" type="button" class="btn btn-primary" (click)="onEdit()">Edit</button>
-                <button *ngIf="edit" type="submit" class="btn btn-primary" [disabled]="!aboutMeForm.valid">Update</button>
+                <button type="button" class="btn btn-secondary mr-2" (click)="cancel()" [disabled]="!edit">Cancel</button>
+                <button *ngIf="!edit && disableOrEnable" type="button" class="btn btn-primary" (click)="onEdit()">Edit</button>
+                <button *ngIf="!disableOrEnable" type="button" class="btn btn-primary" 
+                (click)="add()">Add</button>
+                <button *ngIf="edit" type="submit" class="btn btn-primary" 
+                [disabled]="!isChanged || !aboutMeForm.valid">Update</button>
             </div>
         </div>
     </div>

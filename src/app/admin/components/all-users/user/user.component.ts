@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class UserComponent implements OnInit, OnChanges {
   userForm: FormGroup;
   userModel: UserModel = new UserModel();
-  @Input() user;
+  @Input() user: UserModel;
   @Output() newUser = new EventEmitter<any>();
   @Output() updateUser = new EventEmitter<any>();
   isEdit: boolean;
@@ -22,26 +22,28 @@ export class UserComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.userForm = this.formBuilder.group({
-      'firstName': [null, Validators.required],
-      'lastName': [null, Validators.required],
-      'email': [null, Validators.required],
-      'password': [null, Validators.required],
-      'image': [null, Validators.required],
-      'role': [null, Validators.required]
+      'firstName': [null, [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
+      'lastName': [null, [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
+      'email': [null, [ Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+      Validators.maxLength(40)
+      ]],
+      'password': [null, [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
+      'image': null,
+      'role': [null, Validators.required],
+      'created': null
     });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if(this.user) {
       let user = changes.user.currentValue;
-      console.log(user)
       this.initForm(user);
     }
   }
 
   createUser() {
-    let date: any = new Date();
-    let created = date.toISOString().slice(0, 19).replace('T', ' ');
+    let date = new Date().getTimezoneOffset() * 60000;
+    let created = (new Date(Date.now() - date)).toISOString().slice(0, 19).replace('T', ' ')
 
     this.userModel = {
       userId: null,
@@ -56,11 +58,9 @@ export class UserComponent implements OnInit, OnChanges {
     }
     this.authService.signUp(this.userModel).subscribe((response: number) => {
       this.userModel.userId = response;
-      this.userModel.created = date;
+      this.userModel.created = created;
      this.newUser.emit(this.userModel);
-     //this.newUser.push(this.userModel);
      this.userForm.reset();
-      console.log(response);
     }, (error)=> {
       console.log(error);
     })
@@ -71,21 +71,41 @@ export class UserComponent implements OnInit, OnChanges {
       'firstName': user.firstName,
       'lastName': user.lastName,
       'email': user.email,
-      'password': '',
+      'password': user.password,
       'image': user.image,
-      'role': user.role
+      'role': user.role,
+      'created': user.created
     })
   }
 
   update() {
     this.authService.updateAccount(this.user.userId, this.userForm.value).subscribe((res) => {
+      this.updateUser.emit({user: this.userForm.value, id: this.id});
+      this.userForm.reset();
       console.log(res);
     }, (error) => {
       console.log(error)
-    })
-    console.log("You updating user");
-    this.updateUser.emit({user: this.userForm.value, id: this.id});//check
-    console.log(this.user);
+    });
+  };
+
+  get firstName() {
+    return this.userForm.controls['firstName'];
+  }
+
+  get lastName() {
+    return this.userForm.controls['lastName'];
+  }
+
+  get email() {
+    return this.userForm.controls['email'];
+  }
+
+  get password() {
+    return this.userForm.controls['password'];
+  }
+
+  get role() {
+    return this.userForm.controls['role'];
   }
 
 }

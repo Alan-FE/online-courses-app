@@ -1,4 +1,5 @@
 export class AboutMeModel {
     profession: string;
-    aboutMe: string;
+    biography: string;
+    fkUser: number;
 }

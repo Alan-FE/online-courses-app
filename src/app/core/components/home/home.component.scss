@@ -45,18 +45,18 @@
     padding-top: 3rem;
 };
 
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
 	.instr-card-container {
         width: 50%;
-    }
-}
+    };
+};
 
 @media (max-width: 576px) {
 	.instr-card-container {
         width: 80%;
         margin: auto;
-    }
-}
+    };
+};
 
 .about-us {
     background-color:  #38aedd; 
@@ -65,5 +65,5 @@
     
     .text {
         color: white;
-    }
-}
+    };
+};

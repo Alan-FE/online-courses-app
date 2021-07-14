@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { InstructorModel } from '../../models/instructor.model';
 import { InstructorService } from '../../services/instructor.service';
@@ -22,25 +23,29 @@ import { InstructorService } from '../../services/instructor.service';
 
 })
 
-export class InstructorsComponent implements OnInit {
+export class InstructorsComponent implements OnInit, OnDestroy {
   instructors$: InstructorModel[] = [];
   value: string = '';
   page: number = 1;
   itemsPerPage: number = 10;
   totalInstructors: number;
+  subscription: Subscription;
 
   constructor(private instService: InstructorService) { }
 
   ngOnInit(): void {
-    this.instService.getAllInstructors().subscribe((instructors: InstructorModel[]) => {
+    this.subscription = this.instService.getAllInstructors().subscribe((instructors: InstructorModel[]) => {
       this.totalInstructors = instructors.length;
       this.instructors$ = instructors;
       console.log(instructors)
     })
-  }
+  };
 
-  onPageChange(value) {
+  onPageChange(value: number) {
     this.page = value;
-  }
+  };
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  };
 }

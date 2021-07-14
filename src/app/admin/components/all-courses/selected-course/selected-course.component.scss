@@ -1,4 +1,13 @@
 .custom-course {
    height: 600px;
    overflow-y: auto;
+   overflow-x: hidden;
+};
+
+h5 {
+   font-weight: bold;
+};
+
+.custom-row {
+   padding: 6px;
 }

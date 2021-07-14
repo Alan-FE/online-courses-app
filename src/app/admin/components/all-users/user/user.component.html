@@ -5,6 +5,17 @@
                 <label for="firstName" class="form-label">First name</label>
                 <input type="text" class="form-control" id="firstName" placeholder="Enter a first name"
                 name="firstName" formControlName="firstName">
+                <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+                    <div *ngIf="firstName.errors?.required" class="text-danger py-1">
+                        First name is required!
+                    </div>
+                    <div *ngIf="firstName.errors?.minlength" class="text-danger py-1">
+                        First name must contain at least 2 characters!
+                    </div>
+                    <div *ngIf="firstName.errors?.maxlength" class="text-danger py-1">
+                        First name can contain a maximum of 40 characters!
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-12 col-lg-6">
@@ -12,6 +23,17 @@
                 <label for="lastName" class="form-label">Last name</label>
                 <input type="text" class="form-control" id="lastName" placeholder="Enter a last name"
                 name="lastName" formControlName="lastName">
+                <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+                    <div *ngIf="lastName.errors?.required" class="text-danger">
+                        Last name is required!
+                    </div>
+                    <div *ngIf="lastName.errors?.minlength" class="text-danger py-1">
+                        Last name must contain at least 2 characters!
+                    </div>
+                    <div *ngIf="lastName.errors?.maxlength" class="text-danger py-1">
+                        Last name can contain a maximum of 40 characters!
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -21,13 +43,32 @@
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter a email"
                 name="email" formControlName="email">
+                <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                    <div *ngIf="email.errors?.required" class="text-danger py-1">
+                        Email is required!
+                    </div>
+                    <div *ngIf="email.errors?.pattern" class="text-danger py-1">
+                        Please enter a valid email address!
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-12 col-lg-6">
             <div class="form-group">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" placeholder="Enter a password"
-                name="password" formControlName="password">
+                name="password" formControlName="password" autocomplete="off">
+                <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                    <div *ngIf="password.errors?.required" class="text-danger py-1">
+                        Password is required
+                    </div>
+                    <div *ngIf="password.errors?.minlength" class="text-danger py-1">
+                        Password must contain at least 6 characters!
+                    </div>
+                    <div *ngIf="password.errors?.maxlength" class="text-danger py-1">
+                        Password can contain a maximum of 50 characters
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -42,17 +83,23 @@
         <div class="col-12 col-lg-6">
             <div class="form-group">
                 <label for="role" class="form-label">Role</label><br>
-                <select id="role" class="form-select" name="role" formControlName="role">
-                    <option value="null">Choose role</option>
+                <select id="role" class="form-select w-100 p-2" name="role" formControlName="role">
+                    <option value="null" disabled>Choose role</option>
                     <option value="user">User role</option>
                     <option value="instructor">Instructor</option>
                 </select>
+                <div *ngIf="role.invalid && (role.dirty || role.touched)">
+                    <div *ngIf="role.errors?.required" class="text-danger py-1">
+                        Role is required
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-5">
-            <button type="submit" class="btn btn-primary w-100">{{ isEdit ? 'Update' : 'Create user' }}</button>
+            <button type="submit" class="btn btn-primary w-100" [disabled]="userForm.invalid">
+                {{ isEdit ? 'Update' : 'Create user' }}</button>
         </div>
     </div>
 </form>

@@ -24,6 +24,7 @@
 
 .course-content {
     margin-top: 10px;
+    margin-bottom: 10px;
     width: 60%;
 }
 
@@ -52,3 +53,10 @@ app-modal {
         width: 100%;
     };
 }
+
+.purchased-indicator {
+    background-color: yellowgreen;
+    color: white;
+    padding: 4px;
+    cursor: default;
+};

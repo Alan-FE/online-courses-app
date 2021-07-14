@@ -3,11 +3,13 @@
         
             <div class="course-info">
                 <h1>{{ course.courseName }}</h1>
-                <p>{{ course.description }}</p>
+                <p class="d-inline-block m-0">
+                    {{ (longText) ? (course.description | slice:0:500)+'...' : (course.description) }}
+                <a *ngIf="longText" [routerLink]="" (click)="readMoreLess()">{{ longText ? 'Read more' : 'Read less' }}</a></p>
                 <span>
                     <app-star-rating [rating]="course.courseRating" [forShow]="true"></app-star-rating>
                     {{ course.courseRating | number: '1.0-1' }} ({{ course.noRating }}) 
-                    <ng-template *ngIf="authService.loggedUser?.role =='instructor'">
+                    <ng-container *ngIf="authService.loggedUser?.userId === course.fkUser">
                     <a [routerLink]="" 
                     (click)="showList('custom-modal-1', course.courseId)">List of students</a>
                         <app-modal id="custom-modal-1">
@@ -32,7 +34,7 @@
                             <button class="btn btn-secondary mx-auto m-1"
                                     (click)="closeModal('custom-modal-1')">Close</button>
                         </app-modal>
-                    </ng-template>
+                    </ng-container>
                 </span>
                 <p>Created by {{ course.instrFullName }}</p>
                 <p class="m-0"><i class="far fa-calendar"></i> Added {{ course.added | date: 'short'}} <br><i
@@ -43,12 +45,12 @@
         <div class="middle">
             <div class="course-card">
                 <div class="card">
-                    <img src="https://miro.medium.com/max/1838/1*P7x-_0XfQz6CVmMY_QAv0w.png" alt="course-image">
+                    <img [src]="course.image" alt="course-image">
                     <div class="card-body">
                         <h3>{{ course.courseName }}</h3>
                         <div *ngIf="authService.loggedUser?.role === 'instructor'; else user">
                             <app-modal id="custom-modal-2">
-                                <app-my-courses [updateForm]="data" [edit]="isEdit" (update)="updateCourse($event)"></app-my-courses>
+                                <app-my-courses [updateForm]="course" [edit]="isEdit" (courseChanged)="updateCourse($event)"></app-my-courses>
                                 <button class="btn btn-secondary mx-auto m-1"
                                     (click)="closeModal('custom-modal-2')">Close</button>
                             </app-modal>
@@ -59,13 +61,14 @@
                                 </div>
                             </ng-container>
                         </div>
+                        <span class="purchased-indicator" *ngIf="course.purchased">Purchased</span>
                         <div>Price {{ course.price | currency }}</div>
                         <ng-template #user>
                             <button *ngIf="!course.inCart && !course.purchased" type="button"
                                 class="btn btn-primary m-1 w-100" (click)="addToCart(course.courseId)">Add to cart</button>
-                            <button *ngIf="course.inCart" type="button" class="btn btn-danger m-1 w-100"
+                            <button *ngIf="course.inCart && !course.purchased" type="button" class="btn btn-danger m-1 w-100"
                                 routerLink="/cart">Go to cart</button>
-                            <button *ngIf="!course.purchased; else buyed" type="button" class="btn btn-success w-100 m-1"
+                            <button *ngIf="!course.purchased" type="button" class="btn btn-success w-100 m-1"
                                 (click)="buyCourse(course.courseId)">Buy
                                 Now</button>
                         </ng-template>

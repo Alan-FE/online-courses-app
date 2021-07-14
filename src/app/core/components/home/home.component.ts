@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { CourseModel } from 'src/app/shared/models/course.model';
+import { PopularInstructorsModel } from '../../models/popular-instructors.model';
+import { StatisticsModel } from '../../models/statistics.model';
 import { HomeService } from '../../services/home.service';
 
 @Component({
@@ -6,33 +10,27 @@ import { HomeService } from '../../services/home.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-  popularCourses$;
-  popularInstructors$;
-  statistics$;
+export class HomeComponent implements OnInit, OnDestroy {
+  popularCourses$: CourseModel[] = [];
+  popularInstructors$: PopularInstructorsModel[] = [];
+  statistics$: StatisticsModel[] = [];
+  subscription: Subscription;
 
   constructor(private homeService: HomeService) { }
 
   ngOnInit(): void {
-    this.homeService.popularCourses().subscribe((res) =>{
-      this.popularCourses$ = res;
-      console.log(res);
-    }, (error)=> {
-      console.log(error)
-    });
-    this.homeService.statistics().subscribe((res) =>{
-      this.statistics$ = res[0];
-      console.log(this.statistics$);
-    }, (error)=> {
-      console.log(error)
-    });
-    this.homeService.popularInstructors().subscribe((res) =>{
-      this.popularInstructors$ = res;
-      console.log(this.popularInstructors$);
+   this.subscription = this.homeService.getAll().subscribe((res: any) =>{
+      this.popularCourses$ = res[0]
+      this.popularInstructors$ = res[1];
+      this.statistics$ = res[2];
+      console.log(res)
     }, (error) => {
       console.log(error);
-    })
+    });
+  };
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

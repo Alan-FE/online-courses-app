@@ -6,75 +6,75 @@
          </div>
          <div class="card-body">
             <form class="row g-3 m-0" [formGroup]="signupForm" (ngSubmit)="signUp()">
-                <div class="col-6 custom-input">
+                <div class="col-md-6 custom-input">
                     <input type="text" class="form-control" name="firstName" 
                     formControlName="firstName" placeholder="First Name">
                     <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
-                        <div *ngIf="firstName.errors?.required" class="text-danger py-1">
+                        <div *ngIf="firstName.errors?.required" class="text-danger py-1 small">
                             First name is required!
                         </div>
-                        <div *ngIf="firstName.errors?.minlength" class="text-danger py-1">
+                        <div *ngIf="firstName.errors?.minlength" class="text-danger py-1 small">
                             First name must contain at least 2 characters!
                         </div>
-                        <div *ngIf="firstName.errors?.maxlength" class="text-danger py-1">
+                        <div *ngIf="firstName.errors?.maxlength" class="text-danger py-1 small">
                             First name can contain a maximum of 40 characters!
                         </div>
                     </div>
                 </div>
-                <div class="col-6 custom-input">
+                <div class="col-md-6 custom-input">
                     <input type="text" class="form-control" name="lastName" 
                     formControlName="lastName" placeholder="Last Name">
                     <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
-                        <div *ngIf="lastName.errors?.required" class="text-danger">
+                        <div *ngIf="lastName.errors?.required" class="text-danger py-1 small">
                             Last name is required!
                         </div>
-                        <div *ngIf="lastName.errors?.minlength" class="text-danger py-1">
+                        <div *ngIf="lastName.errors?.minlength" class="text-danger py-1 small">
                             Last name must contain at least 2 characters!
                         </div>
-                        <div *ngIf="lastName.errors?.maxlength" class="text-danger py-1">
+                        <div *ngIf="lastName.errors?.maxlength" class="text-danger py-1 small">
                             Last name can contain a maximum of 40 characters!
                         </div>
                     </div>
                 </div>
-                <div class="col-6 custom-input">
+                <div class="col-md-6 custom-input">
                     <input type="email" class="form-control" name="email" 
                     formControlName="email" placeholder="Email address">
                     <div *ngIf="email.invalid && (email.dirty || email.touched)">
-                        <div *ngIf="email.errors?.required" class="text-danger py-1">
+                        <div *ngIf="email.errors?.required" class="text-danger py-1 small">
                             Email is required!
                         </div>
-                        <div *ngIf="email.errors?.pattern" class="text-danger py-1">
+                        <div *ngIf="email.errors?.pattern" class="text-danger py-1 small">
                             Please enter a valid email address!
                         </div>
                     </div>
                 </div>
-                <div class="col-6 custom-input">
-                    <select class="form-select" name="role" formControlName="role">
-                        <option value="null">Choose role</option>
+                <div class="col-md-6 custom-input">
+                    <select class="form-select h-100" name="role" formControlName="role">
+                        <option value="null">Choose role</option> 
                         <option value="user">User role</option>
                         <option value="instructor">Instructor</option>
                     </select>
                 </div>
-                <div class="col-6 custom-input" formGroupName="passwordGroup">
+                <div class="col-md-6 custom-input" formGroupName="passwordGroup">
                     <input type="password" class="form-control" name="password" 
-                    formControlName="password" placeholder="Password">
+                    formControlName="password" placeholder="Password" autocomplete="off">
                     <div *ngIf="password.invalid && (password.dirty || password.touched)">
-                        <div *ngIf="password.errors?.required" class="text-danger py-1">
+                        <div *ngIf="password.errors?.required" class="text-danger py-1 small">
                             Password is required
                         </div>
-                        <div *ngIf="password.errors?.minlength" class="text-danger py-1">
+                        <div *ngIf="password.errors?.minlength" class="text-danger py-1 small">
                             Password must contain at least 6 characters!
                         </div>
-                        <div *ngIf="password.errors?.maxlength" class="text-danger py-1">
+                        <div *ngIf="password.errors?.maxlength" class="text-danger py-1 small">
                             Password can contain a maximum of 50 characters
                         </div>
                     </div>
                 </div>
-                <div class="col-6 custom-input" formGroupName="passwordGroup">
+                <div class="col-md-6 custom-input" formGroupName="passwordGroup">
                     <input type="password" class="form-control" name="confirmPassword" 
-                    formControlName="confirmPassword" placeholder="Confirm password">
+                    formControlName="confirmPassword" placeholder="Confirm password" autocomplete="off">
                 </div>
-                <div *ngIf="passwordGroup.errors?.isNotSame" class="col-12 text-danger custom-input py-1">
+                <div *ngIf="passwordGroup.errors?.isNotSame" class="col-12 text-danger custom-input py-1 small">
                     Your password and confirmation password not match
                 </div>
                 <div class="col-12 custom-input">

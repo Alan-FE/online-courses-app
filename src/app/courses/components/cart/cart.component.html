@@ -1,10 +1,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-8 offset-2">
-            <h3 class="text-muted">{{ cart$?.length || '0' }} Courses in Cart</h3>
+            <h3 class="text-muted">{{ emptyCart }} Courses in Cart</h3>
         </div>
     </div>
-    <div *ngIf="cart$.length == 0 || cart$ == undefined" class="row">
+    <div *ngIf="emptyCart== 0" class="row">
         <div class="col-8 text-center offset-2 custom-cart">
             <i class="fas fa-shopping-cart cart mb-2"></i>
             <p class="text-muted">Your cart is empty. Keep shopping to find a course!</p>

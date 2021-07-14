@@ -10,7 +10,8 @@
                     </app-star-rating>
                     <div>{{rating}}</div>
                     <div class="comment-area">
-                        <textarea [(ngModel)]="review" [disabled]="rating === 0" class="form-control" placeholder="what is your view?"
+                        <textarea [(ngModel)]="review" [disabled]="rating === 0" class="form-control review-text" 
+                        placeholder="what is your view?"
                             rows="4"></textarea>
                     </div>
                     <div class="text-center mt-4">
@@ -19,11 +20,11 @@
                             <i class="fa fa-long-arrow-right ml-1"></i>
                         </button>
                         <ng-template #buttons>
-                            <button type="button" class="btn btn-success px-5 mr-2"
+                            <button type="button" class="btn btn-success px-5 mt-2 mr-0 mr-xl-2"
                                 (click)="updateReview()">Update
                             </button>
         
-                            <button type="button" class="btn btn-secondary  px-5"
+                            <button type="button" class="btn btn-secondary px-5 mt-2"
                                 (click)="onCancel()">Cancel
                             </button>
                         </ng-template>
@@ -34,29 +35,32 @@
     </ng-container>
 
     <ng-container *ngIf="isWrittenReview && !editMode">
-            <div class="">
-                <h5>{{myReview?.fullName}}</h5>
-                <app-star-rating [forShow]="true" [rating]="myReview?.rating"></app-star-rating>
-                <span>{{ myReview?.rating }}</span>
+            <div class="written-review">
+                <h5>{{myReview.fullName}}</h5> <span class="small">Posted on {{ myReview.dateTime | date: 'short' }}</span><br>
+                <app-star-rating [forShow]="true" [rating]="myReview.rating"></app-star-rating>
+                <span>{{ myReview.rating }}</span>
                 <div class="comment-area">
-                    <textarea [disabled]="true" class="form-control" placeholder="what is your view?"
-                        rows="4">{{myReview?.review}}</textarea>
+                    <textarea [disabled]="true" class="form-control review-text" placeholder="what is your view?"
+                        rows="4">{{myReview.review}}</textarea>
                 </div>
                 <button class="btn btn-secondary mt-2 mr-2" (click)="editReview()">Edit</button>
                 <button class="btn btn-danger mt-2" (click)="deleteReview()">Delete</button>
             </div>
     </ng-container>
 
-
-    <div class="reviews row py-3 m-0" *ngFor="let review of reviews$">
+<div class="reviews row py-3 m-0" *ngFor="let review of reviews$">
         <div class="col-3">
             <img [src]="review.image" alt="user-photo" class="w-100">
         </div>
         <div class="col-9">
-            <h5>{{ review.fullName }}</h5>
+            <h5>{{ review.fullName }}</h5> <span class="small">Posted on {{ review.dateTime | date: 'short' }}</span><br>
             <app-star-rating [rating]="review.rating" [forShow]="true"></app-star-rating>
             {{ review.rating }}<br>
             <span class="review-text">{{ review.review }}</span>
         </div>
-    </div>
 </div>
+
+<ng-container *ngIf="reviews$.length == 0">
+    <h4 class="py-2">There aren't any reviews for this course yet!</h4>
+</ng-container>
+

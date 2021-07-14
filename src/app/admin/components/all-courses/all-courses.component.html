@@ -9,7 +9,7 @@
             <th scope="col">Rating</th>
             <th scope="col">Language</th>
             <th scope="col">Price</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -21,8 +21,8 @@
             <td>{{ course.courseRating }}</td>
             <td>{{ course.language }}</td>
             <td>{{ course.price | currency }}</td>
-            <td><i class="fas fa-book-open actions" (click)="read('course-modal', course)"></i>
-                <i class="far fa-trash-alt actions" (click)="deleteCourse(course.courseId, i)"></i>
+            <td>
+                <i class="fas fa-book-open actions" (click)="read('course-modal', course)"></i>
             </td>
         </tr>
         </tbody>

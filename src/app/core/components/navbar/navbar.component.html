@@ -29,7 +29,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a routerLink="/cart" routerLinkActive="active" class="nav-link">
+                    <a routerLink="/cart" routerLinkActive="active" class="nav-link" 
+                    *ngIf="authService.loggedUser?.role==='user' || authService.loggedUser === null">
                         <i class="fas fa-shopping-cart icons"></i> Cart
                     </a>
                 </li>

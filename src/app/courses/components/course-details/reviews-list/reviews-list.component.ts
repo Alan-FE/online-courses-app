@@ -12,11 +12,11 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class ReviewsListComponent implements OnInit {
   reviewObj: ReviewModel = new ReviewModel();
-  @Input() reviews$: any= [];
+  @Input() reviews$: ReviewModel[]= [];
   @Input() isPurchased: number;
   @Output() changeTotalRating = new EventEmitter();
   editMode: boolean;
-  myReview: any;
+  myReview: ReviewModel;
   index: number;
   isWrittenReview: boolean;
   rating: number = 0;
@@ -60,6 +60,7 @@ export class ReviewsListComponent implements OnInit {
   };
 
   init(id: number) {
+    let date: any = new Date();
     let model =this.reviewObj = {
         fullName: this.authService.loggedUser.firstName + ' ' + this.authService.loggedUser.lastName,
         image: this.authService.loggedUser.image,
@@ -67,24 +68,26 @@ export class ReviewsListComponent implements OnInit {
         review: this.review,
         reviewId: id,
         userId: this.authService.loggedUser.userId,
-        dateTime: this.authService.loggedUser.dateTime
+        dateTime: date
       }
     return model;
   }
 
-  onRateChanged(rating) {
+  onRateChanged(rating: number) {
     this.rating = rating;
     console.log(rating)
   };
 
   updateReview() {
+    let date = new Date().getTimezoneOffset() * 60000;
+    let updateDate = (new Date(Date.now() - date)).toISOString().slice(0, 19).replace('T', ' ');
     let obj = {
       rating: this.rating,
-      review: this.review
+      review: this.review,
+      dateTime: updateDate
     }
     this.reviewService.updateReview(this.myReview.reviewId, obj).subscribe((res) =>{
       this.editMode = false;
-      console.log(this.rating);
       const temp = this.myReview.rating;
       this.reviews$[this.index] = this.init(this.myReview.reviewId);
       this.myReview = this.init(this.myReview.reviewId);
@@ -100,7 +103,6 @@ export class ReviewsListComponent implements OnInit {
   };
 
   editReview() {
-    console.log(this.index);
     this.rating = this.myReview.rating;
     this.review = this.myReview.review; 
     this.editMode = true;

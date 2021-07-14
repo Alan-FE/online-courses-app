@@ -32,18 +32,20 @@ export class SignInComponent implements OnInit {
       this.userLogin = {
         email: this.signInForm.value.email,
         password: this.signInForm.value.password
-      }
+      };
       this.authService.signIn(this.userLogin).subscribe((response) =>{
         if(response['accessToken']) {
           localStorage.setItem('accessToken', response['accessToken']);
           localStorage.setItem('refreshToken', response['refreshToken']);
-        }
+        };
 
         if (this.authService.loggedUser.role =='admin') {
           this.router.navigate(['dashboard']);
-        } else {
+        }; 
+        if (this.authService.loggedUser.role !== 'admin') {
           this.router.navigate(['/']);
-        }
+        };
+        console.log(this.authService.loggedUser);
         console.log(response);
       }, (error) => {
         this.errorMessage = error.error.message;

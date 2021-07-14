@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { CourseDetailsModel } from 'src/app/shared/models/course-details.model';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { AdminService } from '../../services/admin.service';
 
@@ -7,34 +9,33 @@ import { AdminService } from '../../services/admin.service';
   templateUrl: './all-courses.component.html',
   styleUrls: ['./all-courses.component.scss']
 })
-export class AllCoursesComponent implements OnInit {
-  allCourses$: any;
-  selectedCourse: any;
+export class AllCoursesComponent implements OnInit, OnDestroy {
+  allCourses$: CourseDetailsModel[] = [];
+  selectedCourse: CourseDetailsModel;
+  subscription: Subscription;
 
   constructor(private modalService: ModalService,
               private adminService: AdminService) { }
 
   ngOnInit(): void {
-    this.adminService.getAllCourses().subscribe(res =>{
-      this.allCourses$ = res;
-      console.log(res);
+   this.subscription = this.adminService.getAllCourses().subscribe((course: CourseDetailsModel[]) =>{
+      this.allCourses$ = course;
     }, (error) => {
       console.log(error);
     })
   }
 
-  read(elementId: string, course) {
+  read(elementId: string, course: CourseDetailsModel) {
     this.selectedCourse = course;
     this.modalService.open(elementId);
-    console.log("Hey works")
   };
 
   closeModal(elementId: string) {
     this.modalService.close(elementId);
-  }
+  };
 
-  deleteCourse(courseId: number, index: number) {
-    
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

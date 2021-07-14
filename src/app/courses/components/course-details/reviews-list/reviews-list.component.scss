@@ -1,11 +1,12 @@
 @import '../../../../../colors';
 
 .reviews-container {
-    width: 50%;
+    width: 40%;
 }
 
 .review-text {
-    word-break: break-all;
+    word-break: keep-all;
+    font-size: .8em;
 }
 
 .rating {
@@ -45,6 +46,12 @@
     background-color: $secondary-color;
     border-color: $secondary-color;
 };
+
+.written-review {
+    border: 1px solid $primary-color;
+    padding: 1.1rem;
+    text-align: center;
+}
 
 @media (max-width: 768px) {
     .reviews-container {

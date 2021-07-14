@@ -1,9 +1,16 @@
 <div class="row my-3 justify-content-center">
+    <ng-container *ngIf="authService.loggedUser?.role === 'instructor'">
+        <div class="col-10 col-sm-7 col-md-3 mb-3 mb-md-0">
+            <button class="btn btn-success w-100" (click)="openModal('custom-modal')">Create course</button>
+        </div>
+    </ng-container>
     <div class="col-10 col-sm-6 col-md-3 order-2 order-sm-1">
         <select class="form-select p-1" (change)="search($event)" style="height: 100%; width: 100%;">
             <option selected value="all">All courses</option>
-            <option value="my-courses">My courses</option>
-            <option value="other-courses">Courses other instructors</option>
+            <ng-container *ngIf="authService.loggedUser?.role === 'instructor'">
+                <option value="my-courses">My courses</option>
+                <option value="other-courses">Courses other instructors</option>
+            </ng-container>
             <option value="highest-rated">Highest Rated</option>
             <option value="price">Sort by price low to high</option>
         </select>
@@ -13,13 +20,10 @@
     </div>
 </div>
 
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <app-modal id="custom-modal">
-            <app-my-courses></app-my-courses>
-            <button class="btn btn-secondary mx-auto m-1" (click)="closeModal('custom-modal')">Close</button>
-        </app-modal>
+    <app-modal id="custom-modal">
+        <app-my-courses (courseChanged)="addNewCourse($event)"></app-my-courses>
+        <button class="btn btn-secondary mx-auto m-1" (click)="closeModal('custom-modal')">Close</button>
+    </app-modal>
     <app-course-card [courses$]="courses$ | pagination: page : itemsPerPage | filter: value: 'courseName'"></app-course-card>
-</div>
 
 <app-pagination [itemsPerPage]="itemsPerPage" [totalItems]="totalCourses" (pageChange)="onPageChange($event)"></app-pagination>

@@ -1,27 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { CartModel } from '../../models/cart.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CartService } from '../../services/cart.service';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   cart$: CartModel[] = [];
   total: number;
+  emptyCart: number;
+  subscription: Subscription;
 
-  constructor( private cartService: CartService, private authService: AuthService ) { }
+  constructor( private cartService: CartService, 
+               private authService: AuthService,
+               private toastr: ToastrService ) { }
 
   ngOnInit(): void {
     if(this.authService.loggedUser !== null) {
-      this.cartService.getDataFromCart(this.authService.loggedUser.userId).subscribe((cart: CartModel[]) => {
+      this.subscription = this.cartService.getDataFromCart(this.authService.loggedUser.userId)
+      .subscribe((cart: CartModel[]) => {
         this.cart$ = cart;
+        this.emptyCart = cart.length;
         this.total = this.totalPrice;
         console.log(cart)
       });
+     } else {
+       this.emptyCart = 0;
      }
   };
 
@@ -37,6 +47,8 @@ export class CartComponent implements OnInit {
     console.log(payload)
     console.log(this.cart$)
     this.cartService.buyCourse(payload).subscribe(res => {
+      this.toastr
+      .success('You have successfully completed the purchase in the next 24 hours you will receive a link to download!');
       this.cart$.splice(0, this.cart$.length);
       console.log(res);
     }, (error) => {
@@ -47,6 +59,7 @@ export class CartComponent implements OnInit {
   removeFromCart(cartId: number, index: number) {
     this.cartService.deleteFromCart(cartId).subscribe((response) => {
       this.cart$.splice(index, 1);
+      this.emptyCart = 0;
       this.total = this.totalPrice;
       console.log(response);
     }, (error) => {
@@ -61,4 +74,10 @@ export class CartComponent implements OnInit {
     }
     return sum;
   };
+
+  ngOnDestroy() {
+    if(this.authService.loggedUser !== null) {
+      this.subscription.unsubscribe();
+    }
+  }
 }

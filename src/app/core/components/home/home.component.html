@@ -2,7 +2,7 @@
 
         <h1>Welcome to the place where you can teach all about programming</h1>
         <img src="https://www.hdfstutorial.com/wp-content/uploads/2020/12/image-12.png" 
-        alt="" style="width: 70%;">
+        alt="home-image" style="width: 70%;">
 
     <div class="top-courses">
         <div class="sub-title">Top courses</div>
@@ -10,31 +10,6 @@
         <app-course-card [courses$]="popularCourses$"></app-course-card>
         <button class="btn btn-outline-info btn-lg custom-btn" routerLink="/courses">View all courses</button>
     </div>
-
-       <!-- <div class="sub-title">Top instructors</div>
-        <h3>Most popular instructors</h3>
-<div class="row">
-    <a [routerLink]="['/instructors/instructor-details', instructor.instructorId]" class="text-decoration-none text-dark" 
-    *ngFor="let instructor of popularInstructors$">
-        <div class="d-inline-block instr-card-container">
-            <div class="card m-2 custom-card">
-                    <div class="text-center align-self-center">
-                        <img [src]="instructor.image" 
-                        alt="instructor-image"  class="img-fluid rounded-circle instr-img">
-                    </div>
-                
-                    <div class="card-body">
-                    <h6 class="card-title">{{ instructor.firstName }} {{ instructor.lastName }}</h6>
-                    
-                    <p class="card-text"><small class="text-muted">
-                        <app-star-rating [rating]="instructor.rating" [forShow]="true"></app-star-rating>
-                        {{ instructor.rating | number: '1.0-1' }}</small>
-                        <br><small class="text-muted">Total courses {{ instructor.noCourses }}</small></p>
-                    </div>
-            </div>
-        </div>
-    </a>
-</div>-->
 
 <div class="sub-title">Top instructors</div>
         <h3>Most popular instructors</h3>
@@ -48,12 +23,12 @@
                     alt="instructor-image"  class="img-fluid rounded-circle instr-img">
                 </div>
             
-                <div class="card-body">
-                <h6 class="card-title">{{ instructor.firstName }} {{ instructor.lastName }}</h6>
+                <div class="card-body overflow-hidden">
+                <h6 class="card-title">{{ instructor.instrFullName }}</h6>
                 
                 <p class="card-text"><small class="text-muted">
-                    <app-star-rating [rating]="instructor.rating" [forShow]="true"></app-star-rating>
-                    {{ instructor.rating | number: '1.0-1' }}</small>
+                    {{ instructor.rating | number: '1.0-1' }}<app-star-rating [rating]="instructor.rating" [forShow]="true"></app-star-rating>
+                    </small> Instructor rating
                     <br><small class="text-muted">Total courses {{ instructor.noCourses }}</small></p>
                 </div>
         </div>
@@ -65,7 +40,7 @@
     <div class="statistics">
         <div class="sub-title">About us</div>
         <h3>Statistics</h3>
-        <div class="row align-items-center about-us">
+        <div class="row align-items-center about-us" *ngFor="let statistic of statistics$">
             <div class="col-sm-2 col-md-2">
                 <span class="fa-stack fa-2x">
                     <i class="fas fa-circle fa-stack-2x"></i>
@@ -73,7 +48,7 @@
                 </span>
             </div>
             <div class="col-sm-2 col-md-2 text">
-                <h3>{{ statistics$?.noCourses }}</h3>
+                <h3>{{ statistic.noCourses }}</h3>
                 <p>Number of courses</p>
             </div>
             <div class="col-sm-2 col-md-2">
@@ -83,7 +58,7 @@
                 </span>
             </div>
             <div class="col-sm-2 col-md-2 text">
-                <h3>{{ statistics$?.soldCourses }}</h3>
+                <h3>{{ statistic.soldCourses }}</h3>
                 <p>Number of students</p>
             </div>
             <div class="col-sm-2 col-md-2">
@@ -93,7 +68,7 @@
                 </span>
             </div>
             <div class="col-sm-1 col-md-2 text">
-                <h3>{{ statistics$?.noInstructors }}</h3>
+                <h3>{{ statistic.noInstructors }}</h3>
                 <p>Number of instructors</p>
             </div>
         </div>

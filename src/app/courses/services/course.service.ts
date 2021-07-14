@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 
 export class CourseService {
   serverUrl: string = environment.serverUrl;
-  coursesChanged = new Subject();
 
   constructor( private http: HttpClient, private authService: AuthService ) { }
 
@@ -50,7 +49,7 @@ export class CourseService {
 
   selectFilter(payload) {
     const params = new HttpParams()
-    .set('id', `${this.authService.loggedUser.userId}`);
+    .set('id', `${this.authService.loggedUser?.userId}`);
     return this.http.post(this.serverUrl + 'select-filter', payload, {params: params});
   }
 
